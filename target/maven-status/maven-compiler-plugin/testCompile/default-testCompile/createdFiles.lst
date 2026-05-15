@@ -1,0 +1,3 @@
+com\zestindia\employeemanagement\repository\EmployeeRepositoryTest.class
+com\zestindia\employeemanagement\service\EmployeeServiceTest.class
+com\zestindia\employeemanagement\service\AuthServiceTest.class
