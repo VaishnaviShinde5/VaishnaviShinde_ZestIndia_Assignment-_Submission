@@ -1,24 +1,60 @@
-# Employee Management System - Spring Boot + JWT
+# 🚀 Employee Management System
+### Built for **Zest India IT Services Pvt. Ltd.** — Software Developer (Java) Assignment
 
-> Assignment solution for **Zest India IT Services Pvt. Ltd.** – Software Developer (Java) Role
-
----
-
-## Tech Stack
-| Technology | Version |
-|---|---|
-| Java | 17 |
-| Spring Boot | 3.2.5 |
-| Spring Data JPA / Hibernate | Included |
-| Spring Security | Included |
-| MySQL | 8.x |
-| JWT (JJWT) | 0.11.5 |
-| Maven | 3.x |
-| Lombok | Latest |
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.5-brightgreen?style=for-the-badge&logo=springboot)
+![Java](https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=java)
+![MySQL](https://img.shields.io/badge/MySQL-8.x-blue?style=for-the-badge&logo=mysql)
+![JWT](https://img.shields.io/badge/JWT-Secured-red?style=for-the-badge&logo=jsonwebtokens)
+![Maven](https://img.shields.io/badge/Maven-3.x-purple?style=for-the-badge&logo=apachemaven)
 
 ---
 
-## Project Structure
+## 🖥️ Live Preview
+
+### Login Page
+![Login Page](output_screenshot/login.png)
+
+### Register Page
+![Register Page](output_screenshot/register.png)
+
+### Dashboard — Overview
+![Dashboard Overview](output_screenshot/Dashboard_3.png)
+
+### Employee Management
+![Employee Table](output_screenshot\employees-table.png)
+
+---
+
+## ✨ Features
+
+- 🔐 **JWT Authentication** — Secure register & login with Bearer token
+- 👥 **Employee CRUD** — Create, Read, Update, Delete employees
+- 🔍 **Search** — Search by name, email, department, position
+- 📄 **Pagination & Sorting** — Paginated results with flexible sorting
+- 🏢 **Department Filter** — Filter employees by department
+- 🛡️ **Spring Security** — Protected endpoints, stateless sessions
+- 🎨 **Modern UI** — Dark-themed dashboard built into the app
+- ✅ **21 Unit Tests** — Repository + Service + Auth layers fully tested
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Version | Purpose |
+|---|---|---|
+| Java | 17 | Core language |
+| Spring Boot | 3.2.5 | Application framework |
+| Spring Security | Included | Authentication & authorization |
+| Spring Data JPA | Included | Database ORM |
+| MySQL | 8.x | Relational database |
+| JWT (JJWT) | 0.11.5 | Token-based auth |
+| Lombok | 1.18.32 | Boilerplate reduction |
+| Maven | 3.x | Build tool |
+| JUnit 5 + Mockito | Included | Unit testing |
+
+---
+
+## 📁 Project Structure
 
 ```
 employee-management/
@@ -26,17 +62,17 @@ employee-management/
 │   ├── main/
 │   │   ├── java/com/zestindia/employeemanagement/
 │   │   │   ├── config/
-│   │   │   │   └── SecurityConfig.java          # Spring Security + JWT config
+│   │   │   │   └── SecurityConfig.java          # Spring Security + CORS + JWT config
 │   │   │   ├── controller/
 │   │   │   │   ├── AuthController.java          # Register & Login endpoints
-│   │   │   │   └── EmployeeController.java      # CRUD + Pagination endpoints
+│   │   │   │   └── EmployeeController.java      # CRUD + Search + Pagination
 │   │   │   ├── dto/
 │   │   │   │   ├── RegisterRequest.java
 │   │   │   │   ├── LoginRequest.java
 │   │   │   │   ├── AuthResponse.java
 │   │   │   │   ├── EmployeeRequest.java
 │   │   │   │   ├── EmployeeResponse.java
-│   │   │   │   └── ApiResponse.java             # Generic wrapper
+│   │   │   │   └── ApiResponse.java             # Generic response wrapper
 │   │   │   ├── entity/
 │   │   │   │   ├── User.java
 │   │   │   │   └── Employee.java
@@ -48,8 +84,8 @@ employee-management/
 │   │   │   │   ├── UserRepository.java
 │   │   │   │   └── EmployeeRepository.java
 │   │   │   ├── security/
-│   │   │   │   ├── JwtService.java              # Token generation & validation
-│   │   │   │   ├── JwtAuthenticationFilter.java # Per-request JWT filter
+│   │   │   │   ├── JwtService.java
+│   │   │   │   ├── JwtAuthenticationFilter.java
 │   │   │   │   └── CustomUserDetailsService.java
 │   │   │   └── service/
 │   │   │       ├── AuthService.java
@@ -58,92 +94,193 @@ employee-management/
 │   │   │           ├── AuthServiceImpl.java
 │   │   │           └── EmployeeServiceImpl.java
 │   │   └── resources/
+│   │       ├── static/
+│   │       │   └── index.html                   # Frontend UI (served by Spring Boot)
 │   │       └── application.properties
 │   └── test/
 │       └── java/com/zestindia/employeemanagement/
 │           ├── service/
-│           │   ├── EmployeeServiceTest.java
-│           │   └── AuthServiceTest.java
+│           │   ├── EmployeeServiceTest.java      # 10 tests
+│           │   └── AuthServiceTest.java          # 4 tests
 │           └── repository/
-│               └── EmployeeRepositoryTest.java
+│               └── EmployeeRepositoryTest.java   # 7 tests
 └── pom.xml
 ```
 
 ---
 
-## Prerequisites
-- Java 17+
-- Maven 3.x
-- MySQL 8.x running locally
+## ⚙️ Setup & Run
+
+### Prerequisites
+- ✅ Java 17 installed and set as default
+- ✅ Maven 3.x installed
+- ✅ MySQL 8.x running locally
+- ✅ MySQL Workbench (optional, for visual DB access)
 
 ---
 
-## Setup & Run
+### Step 1 — Create MySQL Database
 
-### 1. Create MySQL Database
+Open MySQL Workbench or any MySQL client and run:
+
 ```sql
-CREATE DATABASE employee_db;
+CREATE DATABASE IF NOT EXISTS employee_db;
 ```
 
-### 2. Configure `application.properties`
+---
+
+### Step 2 — Configure Database Password
+
+Open `src/main/resources/application.properties` and update your MySQL password:
+
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/employee_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
 spring.datasource.username=root
-spring.datasource.password=YOUR_MYSQL_PASSWORD
+spring.datasource.password=YOUR_MYSQL_PASSWORD_HERE
 ```
 
-### 3. Build & Run
+> ⚠️ Replace `YOUR_MYSQL_PASSWORD_HERE` with your actual MySQL root password.
+
+---
+
+### Step 3 — Build the Project
+
 ```bash
+cd employee-management
 mvn clean install
+```
+
+Expected output:
+```
+[INFO] Tests run: 21, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+```
+
+---
+
+### Step 4 — Run the Application
+
+```bash
 mvn spring-boot:run
 ```
 
-The app starts at: `http://localhost:8080`
-
-### 4. Run Tests
-```bash
-mvn test
+When you see this, the app is ready:
+```
+Tomcat started on port 8080 (http)
+Started EmployeeManagementApplication in X seconds
 ```
 
 ---
 
-## API Endpoints
+### Step 5 — Open the UI
 
-### Authentication (Public – No Token Required)
+Open your browser and go to:
 
-| Method | URL | Description |
+```
+http://localhost:8080
+```
+
+You will see the **ZestIndia Employee Portal** login page.
+
+---
+
+## 🎯 Quick Start Guide (Try It Now!)
+
+### 1️⃣ Register an Account
+
+Click **"Create one"** on the login page and fill in:
+
+| Field | Value |
+|---|---|
+| Username | `admin` |
+| Email | `admin@zestindia.com` |
+| Password | `password123` |
+
+Click **Create Account** → you'll be redirected to login.
+
+---
+
+### 2️⃣ Login
+
+Use the credentials you just created:
+
+| Field | Value |
+|---|---|
+| Username | `admin` |
+| Password | `password123` |
+
+Click **Sign In** → the dashboard loads automatically.
+
+---
+
+### 3️⃣ Add Your First Employee
+
+Click **"Add Employee"** button and fill in:
+
+| Field | Example Value |
+|---|---|
+| Full Name | `Priya Sharma` |
+| Email | `priya.sharma@zestindia.com` |
+| Department | `Engineering` |
+| Position | `Senior Java Developer` |
+| Salary | `850000` |
+| Date of Joining | `2024-01-15` |
+
+Click **Save Employee** → it appears in the table instantly!
+
+---
+
+### 4️⃣ Explore Features
+
+| Feature | How to use |
+|---|---|
+| 🔍 Search | Type in the search bar — results filter live |
+| ✏️ Edit | Click the pencil icon on any employee row |
+| 🗑️ Delete | Click the trash icon → confirm deletion |
+| 📊 Dashboard | Click "Overview" in sidebar for stats |
+| 📄 Pagination | Use arrows at bottom of table |
+
+---
+
+## 🔌 REST API Reference
+
+### Authentication (Public — No Token Required)
+
+| Method | Endpoint | Description |
 |---|---|---|
-| POST | `/api/auth/register` | Register new user |
-| POST | `/api/auth/login` | Login & get JWT token |
+| `POST` | `/api/auth/register` | Register new user |
+| `POST` | `/api/auth/login` | Login & receive JWT token |
 
-### Employee Management (Protected – JWT Required)
+### Employee Management (🔒 JWT Token Required)
 
-| Method | URL | Description |
+| Method | Endpoint | Description |
 |---|---|---|
-| POST | `/api/employees` | Create new employee |
-| GET | `/api/employees` | Get all employees (paginated) |
-| GET | `/api/employees/{id}` | Get employee by ID |
-| PUT | `/api/employees/{id}` | Update employee |
-| DELETE | `/api/employees/{id}` | Delete employee |
-| GET | `/api/employees/department/{dept}` | Filter by department |
-| GET | `/api/employees/search?keyword=X` | Search employees |
+| `POST` | `/api/employees` | Create new employee |
+| `GET` | `/api/employees` | Get all employees (paginated) |
+| `GET` | `/api/employees/{id}` | Get employee by ID |
+| `PUT` | `/api/employees/{id}` | Update employee |
+| `DELETE` | `/api/employees/{id}` | Delete employee |
+| `GET` | `/api/employees/department/{dept}` | Filter by department |
+| `GET` | `/api/employees/search?keyword=X` | Search employees |
 
-### Pagination & Sorting Parameters
+### Pagination Parameters
+
 ```
 GET /api/employees?page=0&size=10&sortBy=name&sortDir=asc
 ```
-| Param | Default | Description |
+
+| Parameter | Default | Options |
 |---|---|---|
-| page | 0 | Page number (0-indexed) |
-| size | 10 | Records per page |
-| sortBy | id | Field to sort by |
-| sortDir | asc | Sort direction: `asc` or `desc` |
+| `page` | `0` | Any number (0-indexed) |
+| `size` | `10` | Any number |
+| `sortBy` | `id` | `name`, `email`, `salary`, `department`, `dateOfJoining` |
+| `sortDir` | `asc` | `asc`, `desc` |
 
 ---
 
-## Postman Testing Guide
+## 🧪 Testing with Postman
 
-### Step 1: Register a User
+### Step 1 — Register
 ```
 POST http://localhost:8080/api/auth/register
 Content-Type: application/json
@@ -155,7 +292,7 @@ Content-Type: application/json
 }
 ```
 
-### Step 2: Login
+### Step 2 — Login & Copy Token
 ```
 POST http://localhost:8080/api/auth/login
 Content-Type: application/json
@@ -165,17 +302,35 @@ Content-Type: application/json
   "password": "password123"
 }
 ```
-**Copy the `token` from the response.**
 
-### Step 3: Use Token in All Employee Requests
-```
-Authorization: Bearer <paste_token_here>
+Response:
+```json
+{
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiJ9...",
+    "tokenType": "Bearer",
+    "username": "johnadmin",
+    "email": "john@zestindia.com",
+    "role": "ROLE_USER"
+  }
+}
 ```
 
-### Step 4: Create Employee
+> 📋 **Copy the token value** — you'll need it for all employee requests.
+
+### Step 3 — Add Authorization Header
+
+In every employee request, add this header:
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...
+```
+
+### Step 4 — Create Employee
 ```
 POST http://localhost:8080/api/employees
-Authorization: Bearer <token>
+Authorization: Bearer <your_token>
 Content-Type: application/json
 
 {
@@ -188,22 +343,16 @@ Content-Type: application/json
 }
 ```
 
-### Step 5: Get All Employees (Paginated + Sorted)
-```
-GET http://localhost:8080/api/employees?page=0&size=5&sortBy=salary&sortDir=desc
-Authorization: Bearer <token>
-```
-
-### Step 6: Search Employees
+### Step 5 — Search Employees
 ```
 GET http://localhost:8080/api/employees/search?keyword=priya
-Authorization: Bearer <token>
+Authorization: Bearer <your_token>
 ```
 
-### Step 7: Update Employee
+### Step 6 — Update Employee
 ```
 PUT http://localhost:8080/api/employees/1
-Authorization: Bearer <token>
+Authorization: Bearer <your_token>
 Content-Type: application/json
 
 {
@@ -216,74 +365,57 @@ Content-Type: application/json
 }
 ```
 
-### Step 8: Delete Employee
+### Step 7 — Delete Employee
 ```
 DELETE http://localhost:8080/api/employees/1
-Authorization: Bearer <token>
+Authorization: Bearer <your_token>
 ```
 
 ---
 
-## Sample API Responses
+## 🔒 Security Architecture
 
-### Successful Login Response
-```json
-{
-  "success": true,
-  "message": "Login successful",
-  "data": {
-    "token": "eyJhbGciOiJIUzI1NiJ9...",
-    "tokenType": "Bearer",
-    "username": "johnadmin",
-    "email": "john@zestindia.com",
-    "role": "ROLE_USER"
-  },
-  "timestamp": "2024-05-15T10:30:00"
-}
 ```
-
-### Paginated Employees Response
-```json
-{
-  "success": true,
-  "message": "Employees retrieved successfully",
-  "data": {
-    "content": [
-      {
-        "id": 1,
-        "name": "Priya Sharma",
-        "email": "priya.sharma@zestindia.com",
-        "department": "Engineering",
-        "position": "Senior Java Developer",
-        "salary": 850000.00,
-        "dateOfJoining": "2024-01-15",
-        "createdAt": "2024-05-15T10:30:00",
-        "updatedAt": "2024-05-15T10:30:00"
-      }
-    ],
-    "totalElements": 1,
-    "totalPages": 1,
-    "size": 5,
-    "number": 0
-  },
-  "timestamp": "2024-05-15T10:31:00"
-}
-```
-
----
-
-## Security Flow
-```
-Client → HTTP Request
-         ↓
-JwtAuthenticationFilter (extracts & validates Bearer token)
-         ↓
-SecurityContextHolder (sets authenticated user)
-         ↓
+Client Request
+      │
+      ▼
+JwtAuthenticationFilter
+  ├── Extracts Bearer token from Authorization header
+  ├── Validates token signature & expiry
+  └── Sets SecurityContext with authenticated user
+      │
+      ▼
+Spring Security Filter Chain
+  ├── /api/auth/**  → PUBLIC (no token needed)
+  ├── /index.html   → PUBLIC (frontend)
+  └── /api/employees/** → PROTECTED (JWT required)
+      │
+      ▼
 Controller → Service → Repository → MySQL
 ```
 
 ---
 
-## Author
-Built for Zest India IT Services Pvt. Ltd. Assignment – May 2026
+## ✅ Test Results
+
+```
+Tests run: 21, Failures: 0, Errors: 0, Skipped: 0
+
+├── EmployeeRepositoryTest  →  7 tests  ✅
+├── AuthServiceTest         →  4 tests  ✅
+└── EmployeeServiceTest     → 10 tests  ✅
+```
+
+Run tests yourself:
+```bash
+mvn test
+```
+
+---
+---
+
+## 👩‍💻 Author
+
+**Vaishnavi Shinde**
+Built for Zest India IT Services Pvt. Ltd. — Software Developer (Java) Assignment
+📅 May 2026
