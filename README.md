@@ -12,10 +12,10 @@
 ## 🖥️ Live Preview
 
 ### Login Page
-![Login Page](output_screenshot/login.png)
+![Login Page](output_screenshot/Dashboard.png)
 
 ### Register Page
-![Register Page](output_screenshot/register.png)
+![Register Page](output_screenshot/Dashboard_2.png)
 
 ### Dashboard — Overview
 ![Dashboard Overview](output_screenshot/Dashboard_3.png)
